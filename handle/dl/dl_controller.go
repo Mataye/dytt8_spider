@@ -86,7 +86,7 @@ func DLdata(title,url ,host string) {
 func getNextPage(url string) (next_url string) {
 	doc,err := getDoc(url)
 	if nil != err {
-		fmt.Print("create list doc faild")
+		fmt.Print("create list doc faild ")
 		fmt.Println(err)
 		return
 	}

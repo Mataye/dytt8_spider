@@ -1,13 +1,15 @@
 package main
 
 import (
-	"dytt_spider/util"
+
 	"runtime"
-	"dytt_spider/handle/dl"
+
 	"fmt"
 	"regexp"
 	"strings"
 	//"sync"
+	"dytt8_spider/handle/dl"
+	"dytt8_spider/util"
 )
 
 
@@ -59,12 +61,12 @@ func run()  {
 		}
 	}
 
+	dl.DLrun("2018新片精品","http://www.dytt8.net/html/tv/rihantv/index.html",sites[0].Url)
 	//cto := new(sync.WaitGroup)
 	//cto.Add(len(dataMap))
-	for n, v:= range dataMap  {
-		//go dl.DLrun("2018新片精品","http://www.dytt8.net/html/gndy/dyzz/index.html",sites[0].Url,cto)
-		 dl.DLrun(n,v,sites[0].Url)
-	}
+	//for n, v:= range dataMap  {
+		// dl.DLrun(n,v,sites[0].Url)
+	//}
 	//cto.Wait()
 
 }
