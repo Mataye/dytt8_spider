@@ -7,13 +7,17 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	//"sync"
 )
+
+
+
+
 
 func main()  {
 	//最大开两个原生线程,以达到真正的并行
 	runtime.GOMAXPROCS(2)
 	run()
-
 }
 
 var (
@@ -31,9 +35,7 @@ func run()  {
 	sites := util.GetSites()
 	needSource := util.GetNeedSource()
 
-
 	url := "http://" + sites[0].Url
-
 	body ,err := dl.GetBody(url)
 	if nil != err {
 		fmt.Println(err)
@@ -57,13 +59,21 @@ func run()  {
 		}
 	}
 
+	//cto := new(sync.WaitGroup)
+	//cto.Add(len(dataMap))
+	for n, v:= range dataMap  {
+		//go dl.DLrun("2018新片精品","http://www.dytt8.net/html/gndy/dyzz/index.html",sites[0].Url,cto)
+		 dl.DLrun(n,v,sites[0].Url)
+	}
+	//cto.Wait()
+
 }
 
 func resetUrl(old_url,host string) (new_url string)  {
 	new_url = old_url
 	isOk1 := strings.Contains(old_url,host)
 	if false == isOk1 {
-		new_url = host + "/" + old_url
+		new_url = host + old_url
 	}
 
 	isOk2 := strings.Contains(new_url,"http://")

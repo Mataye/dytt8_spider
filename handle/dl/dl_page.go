@@ -12,25 +12,74 @@ import (
 	"strings"
 	"github.com/saintfish/chardet"
 	"golang.org/x/text/encoding/simplifiedchinese"
-	"fmt"
+	_ "fmt"
 	"golang.org/x/text/transform"
 	"bytes"
+
+	//"time"
+	//"fmt"
+	//"golang.org/x/net/context"
+
+	"fmt"
 )
 
 func GetBody(url string) (Bytes []byte ,err error)   {
-	resp ,err := http.Get(url)
+	//var (
+	//	ctx context.Context
+	//	cancel context.CancelFunc
+	//)
+	//ctx,cancel = context.WithTimeout(context.Background(),60 * time.Second)
+	//defer  cancel()
 
+	re_num := 0
+	var err1 error
+	var resp  *http.Response
+	for {
+		if re_num >=4 {
+			break
+		}
+		resp, err1 = http.Get(url)
+		if nil != err1 {
+			re_num++
+			err = err1
+			err1 = nil
+			resp = nil
+			fmt.Println(url + " try " + strconv.Itoa(re_num))
+			continue
+		}
+		if resp.StatusCode != 200 && resp.StatusCode != 304 {
+			resp = nil
+			err = errors.New("Request " + url + "Faild! StatusCode " + strconv.Itoa(resp.StatusCode))
+			re_num++
+			fmt.Println(url + " try " + strconv.Itoa(re_num))
+			continue
+		}
+
+		err = nil
+		break
+	}
 	if nil != err {
 		return
 	}
 
-	if resp.StatusCode != 200 && resp.StatusCode != 304 {
-		err = errors.New("Request " + url + "Faild! StatusCode " + strconv.Itoa(resp.StatusCode))
+	Bytes ,err = chaneEncoding(resp)
+	if nil == Bytes {
+		err = errors.New("Empty Data")
 		return
 	}
 
-	Bytes ,err = chaneEncoding(resp)
-	return 
+	return
+
+	//select {
+	//case <-ctx.Done():
+	//	fmt.Println("time out")
+	//	err = errors.New("Time Out")
+	//	return
+	//default:
+	//	return
+	//}
+
+
 }
 
 //页面解压.修改编码，防止乱码
@@ -113,7 +162,6 @@ func GetCodeFormat(text string) (codeFormat string)  {
 			codeFormat = result.Charset
 		}
 	}
-	fmt.Println(codeFormat)
 	return
 }
 
