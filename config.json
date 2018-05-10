@@ -17,7 +17,7 @@
     "port":3306,
     "db":"godb",
     "usr":"root",
-    "pwd":"",
+    "pwd":"1234",
     "driver_name":"mysql",
     "max_open_conns": 1000,
     "max_idle_conns" :100

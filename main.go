@@ -57,11 +57,12 @@ func run()  {
 	//	}
 	//}
 
-	dl.DLrun("2018新片精品","http://www.dytt8.net/html/gndy/dyzz/index.html",sites[0].Url)
+	//dl.DLrun("2018新片精品","http://www.dytt8.net/html/gndy/dyzz/index.html",sites[0].Url)
 	//dl.DLrun("华语电视剧","http://www.dytt8.net/html/tv/hytv/",sites[0].Url)
 	//dl.DLrun("日韩电视剧","http://www.dytt8.net/html/tv/rihantv/index.html",sites[0].Url)
 	//dl.DLrun("欧美电视剧","http://www.dytt8.net/html/tv/oumeitv/index.html",sites[0].Url)
-
+	//	"http://www.dytt8.net/html/dongman/index.html"
+	//dl.DLrun("动漫","http://www.dytt8.net/html/dongman/index.html",sites[0].Url)
 	//cto := new(sync.WaitGroup)
 	//cto.Add(len(dataMap))
 	//for n, v:= range dataMap  {
