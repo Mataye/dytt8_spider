@@ -8,11 +8,7 @@ import (
 	"sync"
 	"strings"
 	"dytt8_spider/util"
-
-	//"golang.org/x/net/html/atom"
 	"encoding/json"
-
-	//"golang.org/x/net/html/atom"
 	"github.com/spacemonkeygo/errors"
 )
 
