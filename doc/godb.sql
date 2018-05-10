@@ -2,6 +2,7 @@
 --
 -- 表的结构 `video_list`
 --
+create database godb;
 
 DROP TABLE IF EXISTS `videos`;
 CREATE TABLE IF NOT EXISTS `videos` (
