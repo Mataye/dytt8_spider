@@ -21,6 +21,7 @@ import (
 	//"golang.org/x/net/context"
 
 	"fmt"
+	//"time"
 )
 
 func GetBody(url string) (Bytes []byte ,err error)   {
@@ -35,7 +36,7 @@ func GetBody(url string) (Bytes []byte ,err error)   {
 	var err1 error
 	var resp  *http.Response
 	for {
-		if re_num >=4 {
+		if re_num >=20 {
 			break
 		}
 		resp, err1 = http.Get(url)
@@ -45,6 +46,7 @@ func GetBody(url string) (Bytes []byte ,err error)   {
 			err1 = nil
 			resp = nil
 			fmt.Println(url + " try " + strconv.Itoa(re_num))
+			//time.Sleep(2*time.Second)
 			continue
 		}
 		if resp.StatusCode != 200 && resp.StatusCode != 304 {
@@ -52,6 +54,7 @@ func GetBody(url string) (Bytes []byte ,err error)   {
 			err = errors.New("Request " + url + "Faild! StatusCode " + strconv.Itoa(resp.StatusCode))
 			re_num++
 			fmt.Println(url + " try " + strconv.Itoa(re_num))
+			//time.Sleep(2*time.Second)
 			continue
 		}
 

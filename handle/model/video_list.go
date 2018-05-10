@@ -1,0 +1,10 @@
+package model
+
+func Insert ()  {
+	
+}
+
+
+
+
+

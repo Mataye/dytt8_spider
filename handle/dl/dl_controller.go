@@ -7,16 +7,29 @@ import (
 	"bytes"
 	"sync"
 	"strings"
+	"dytt8_spider/util"
 
-	//"time"
-	//"golang.org/x/net/context"
-	//"github.com/spacemonkeygo/errors"
+	//"golang.org/x/net/html/atom"
+	"encoding/json"
+
+	//"golang.org/x/net/html/atom"
+	"github.com/spacemonkeygo/errors"
 )
+
+
+
+
 
 type (
 	Movie struct {
 		m_name string
 		m_ftps []string
+	}
+
+
+	Video struct {
+		M_name   string
+		Ftps_url string
 	}
 )
 
@@ -71,17 +84,59 @@ func DLdata(title,url ,host string) {
 	}
 	control.Wait()
 	close(data_channel)
-	var current_movies  []Movie
+	//var current_movies  []Movie
 	if 0 == len(data_channel) {
 		fmt.Println("empty Data")
 		return
 	}
 
-	for i:= range data_channel {
-		current_movies = append(current_movies , i)
+
+	mydb := util.GetDb()
+	var insertData Video
+	for val:= range data_channel {
+		insertData = Video{}
+		insertData = combineInsertData(val)
+		//if  != insertData {
+			if err := mydb.Create(insertData).Error; nil != err {
+				fmt.Println(err)
+			}
+		//}
+
+	//	insertData = combineInsertData(insertData,val)
+		//current_movies = append(current_movies , i)
 	}
-	//fmt.Println(current_movies)
+
+	//if nil != insertData {
+	//	mydb := util.GetDb()
+	//	if err := mydb.Create(insertData).Error; nil != err {
+	//		fmt.Println(err)
+	//	}
+	//}
+	dd ,_ := json.Marshal(insertData)
+	fmt.Println(string(dd))
 }
+
+
+func combineInsertData(detail  Movie)  Video {
+
+	jsonStr ,_ := json.Marshal(detail.m_ftps)
+	//if nil ==err {
+		mid := Video{detail.m_name,string(jsonStr)}
+		//insertData = append(insertData,mid)
+	//}
+	return mid
+	//return insertData
+}
+
+//func combineInsertData(insertData []InsertData,detail  Movie)  []InsertData {
+//
+//	jsonStr ,err := json.Marshal(detail.m_ftps)
+//	if nil == err {
+//		mid := InsertData{detail.m_name,string(jsonStr)}
+//		insertData = append(insertData,mid)
+//	}
+//	return insertData
+//}
 
 func getNextPage(url string) (next_url string) {
 	doc,err := getDoc(url)
@@ -149,7 +204,7 @@ func getDetailPageInfo(control *sync.WaitGroup,t_url string,data_channel chan Mo
 		}
 	})
 	data_channel<-ftps
-	fmt.Println(ftps)
+	//fmt.Println(ftps)
 	control.Done()
 	return
 }
@@ -165,9 +220,14 @@ func getDoc(url string) (doc *goquery.Document,err error) {
 	//defer  cancel()
 	var body []byte
 	body, err = GetBody(url)
-	if nil != err {
+	if nil != err{
 		return
 	}
+	if  nil == body {
+		err = errors.New("get Page " + url + " Data Empty")
+		return
+	}
+
 
 	reader := bytes.NewReader(body)
 	doc, err = goquery.NewDocumentFromReader(reader)

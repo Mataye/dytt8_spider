@@ -64,8 +64,5 @@ func GetNeedSource() []string  {
 	return  config.NeedSource
 }
 
-func GetDbInfo()  {
-	
-}
 
 

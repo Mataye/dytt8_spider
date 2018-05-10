@@ -4,7 +4,7 @@ import (
 
 	"runtime"
 
-	"fmt"
+	_ "fmt"
 	"regexp"
 	"strings"
 	//"sync"
@@ -32,36 +32,35 @@ var (
 )
 
 
-
 func run()  {
 	sites := util.GetSites()
-	needSource := util.GetNeedSource()
+	//needSource := util.GetNeedSource()
 
-	url := "http://" + sites[0].Url
-	body ,err := dl.GetBody(url)
-	if nil != err {
-		fmt.Println(err)
-		return
-	}
+	//url := "http://" + sites[0].Url
+	//body ,err := dl.GetBody(url)
+	//if nil != err {
+	//	fmt.Println(err)
+	//	return
+	//}
+	//
+	//title_groups := title_pattern.FindAllSubmatch(body,len(body))
+	//var dataMap map[string]string
+	//dataMap = make(map[string]string)
+	//
+	////获取有效的数据
+	//for i:=0 ; i< len(title_groups) ; i++ {
+	//	if len(title_groups[i]) >= 1 {
+	//		mt_name, mt_url := getTitleNameAndUrl(title_groups[i][1])
+	//		if "" == mt_url || "" == mt_name {
+	//			continue
+	//		}
+	//		if isIn := In_array(mt_name,needSource);true == isIn {
+	//			dataMap[mt_name] = resetUrl(mt_url,url)
+	//		}
+	//	}
+	//}
 
-	title_groups := title_pattern.FindAllSubmatch(body,len(body))
-	var dataMap map[string]string
-	dataMap = make(map[string]string)
-
-	//获取有效的数据
-	for i:=0 ; i< len(title_groups) ; i++ {
-		if len(title_groups[i]) >= 1 {
-			mt_name, mt_url := getTitleNameAndUrl(title_groups[i][1])
-			if "" == mt_url || "" == mt_name {
-				continue
-			}
-			if isIn := In_array(mt_name,needSource);true == isIn {
-				dataMap[mt_name] = resetUrl(mt_url,url)
-			}
-		}
-	}
-
-	dl.DLrun("2018新片精品","http://www.dytt8.net/html/tv/rihantv/index.html",sites[0].Url)
+	dl.DLrun("2018新片精品","http://www.dytt8.net/html/gndy/dyzz/index.html",sites[0].Url)
 	//cto := new(sync.WaitGroup)
 	//cto.Add(len(dataMap))
 	//for n, v:= range dataMap  {
