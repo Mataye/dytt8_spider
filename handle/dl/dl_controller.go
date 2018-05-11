@@ -110,6 +110,7 @@ func DLdata(title,url ,host string) {
 	//}
 	dd ,_ := json.Marshal(insertData)
 	fmt.Println(string(dd))
+	close(data_channel)
 }
 
 
